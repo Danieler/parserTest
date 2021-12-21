@@ -1,5 +1,6 @@
 import express, { Application, Request, Response } from "express";
 import axios from 'axios';
+import { configUrls } from './config';
 
 const app: Application = express();
 const port = 3000;
@@ -12,9 +13,9 @@ app.get(
 	"/",
 	async (req: Request, res: Response): Promise<Response> => {
 		try {
-			const twitterPromise = axios('http://codefight.davidbanham.com/twitter');
-			const facebookPromise = axios('http://codefight.davidbanham.com/facebook');
-			const instagramPromise = axios('http://codefight.davidbanham.com/instagram');
+			const twitterPromise = axios(`${configUrls.base}${configUrls.twitter}`);
+			const facebookPromise = axios(`${configUrls.base}${configUrls.facebook}`);
+			const instagramPromise = axios(`${configUrls.base}${configUrls.instagram}`);
 			const [twitterResponse, facebookResponse, instagramResponse] = await Promise.all([twitterPromise, facebookPromise, instagramPromise]);
 			return res.status(200).send({
 				twitter: twitterResponse.data.map((data: { tweet: any; }) => data.tweet),
@@ -22,7 +23,6 @@ app.get(
 				instagram: instagramResponse.data.map((data: { picture: any; }) => data.picture)
 			});
 		} catch (e) {
-			console.log(e);
 			return res.json({ error: {
 					message: e.message,
 					status: 500
