@@ -1,6 +1,6 @@
 describe('indexController', () => {
 
-    it('getEvents: should call getEvents method from EventService', async () => {
+    it('starting test', async () => {
         expect(true).toBe(true);
     });
 });
