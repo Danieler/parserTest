@@ -16,10 +16,6 @@ app.get(
 			const facebookPromise = axios('http://codefight.davidbanham.com/facebook');
 			const instagramPromise = axios('http://codefight.davidbanham.com/instagram');
 			const [twitterResponse, facebookResponse, instagramResponse] = await Promise.all([twitterPromise, facebookPromise, instagramPromise]);
-
-			console.log("twitter", twitterResponse.data)
-			console.log("facebookResponse", facebookResponse.data)
-			console.log("instagramResponse", instagramResponse.data)
 			return res.status(200).send({
 				twitter: twitterResponse.data.map((data: { tweet: any; }) => data.tweet),
 				facebook: facebookResponse.data.map((data: { status: any; }) => data.status),
