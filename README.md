@@ -1,6 +1,5 @@
-# node-express-typescript-starter
-Starting template for Node Express API with Typescript 
-
+# parser social api test
+social api test for parser
 ## Pre-requisities 
 Runs on Node versions >= 10 
 
@@ -13,6 +12,8 @@ npm install
 Run the starter Express API using the command
 ```
 npm run start
+
+curl localhost:3000
 ```
 
 ## Notes
