@@ -1,5 +1,5 @@
 
-import { Request, Response, NextFunction } from "express";
+import { Request, Response } from "express";
 import debug, {IDebugger} from "debug";
 import axios from "axios";
 import {configUrls} from "../config";
@@ -8,7 +8,7 @@ const log: IDebugger = debug("index:controller");
 
 class IndexController {
     constructor() {}
-    async getSocialInfo(req: any, res: Response): Promise<Response> {
+    async getSocialInfo(req: Request, res: Response): Promise<Response> {
         try {
             const twitterPromise = axios(`${configUrls.base}${configUrls.twitter}`);
             const facebookPromise = axios(`${configUrls.base}${configUrls.facebook}`);
