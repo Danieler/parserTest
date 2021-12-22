@@ -8,7 +8,10 @@ const log: IDebugger = debug("index:controller");
 
 class IndexController {
     constructor() {}
-    async getSocialInfo(req: Request, res: Response): Promise<Response> {
+    getNumber() {
+        return 3;
+    }
+    async getSocialInfo(req:any, res:any) {
         try {
             const twitterPromise = axios(`${configUrls.base}${configUrls.twitter}`);
             const facebookPromise = axios(`${configUrls.base}${configUrls.facebook}`);
@@ -19,6 +22,7 @@ class IndexController {
                 facebook: facebookResponse.data.map((data: { status: any; }) => data.status),
                 instagram: instagramResponse.data.map((data: { picture: any; }) => data.picture)
             });
+
         } catch (e) {
             log("Controller capturing error", e);
             return res.json({

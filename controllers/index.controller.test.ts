@@ -1,22 +1,32 @@
 import indexController from "./index.controller";
 import axios from "axios";
-import { Request, Response } from "express";
-import {mockRequest, mockResponse} from "mock-req-res";
-
-jest.mock("axios");
-
+jest.mock('axios', () => jest.fn());
 
 describe('indexController', () => {
-
-
     describe('getSocialInfo method', () => {
-
         it('should call 3 social endpoints through axios', async () => {
-            (axios as unknown as jest.Mock).mockResolvedValueOnce([]);
-            const req = mockRequest()
-            const res = mockResponse()
-            await indexController.getSocialInfo(req as Request, res as Response);
+            const req = {}
+            const res = { status: jest.fn().mockReturnThis(), json: jest.fn() };
+            await indexController.getSocialInfo(req, res);
             expect(axios).toHaveBeenCalledTimes(3);
+        });
+        it('should call 3 social endpoints through axios', async () => {
+            const mRes = new Promise(resolve => {
+                resolve({data: [{tweet: "tweet"}]})
+            });
+            const mRes2 = new Promise(resolve => {
+                resolve({data: [{status: "status"}]})
+            });
+            const mRes3 = new Promise(resolve => {
+                resolve({data: [{picture: "picture"}]})
+            });
+            (axios as unknown as jest.Mock).mockResolvedValueOnce(mRes);
+            (axios as unknown as jest.Mock).mockResolvedValueOnce(mRes2);
+            (axios as unknown as jest.Mock).mockResolvedValueOnce(mRes3);
+            const req = {}
+            const res = { status: jest.fn().mockReturnThis(), json: jest.fn() };
+            await indexController.getSocialInfo(req, res);
+            expect(res.status).toHaveBeenCalledWith(200);
         });
 
     });
