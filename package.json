@@ -13,6 +13,7 @@
   "author": "Royce Chua",
   "license": "ISC",
   "devDependencies": {
+    "@types/debug": "^4.1.7",
     "@types/express": "^4.17.11",
     "@types/jest": "^27.0.3",
     "@types/node": "^14.14.37",
@@ -23,6 +24,7 @@
   },
   "dependencies": {
     "axios": "^0.24.0",
+    "debug": "^4.3.3",
     "express": "^4.17.1"
   }
 }

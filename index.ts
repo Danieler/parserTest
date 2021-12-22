@@ -1,6 +1,7 @@
 import express, {Application, Request, Response} from "express";
-import axios from 'axios';
-import {configUrls, port} from './config';
+import { port} from './config';
+import indexController from "./controllers/index.controller";
+
 
 const app: Application = express();
 // Body parsing Middleware
@@ -9,26 +10,7 @@ app.use(express.urlencoded({extended: true}));
 
 app.get(
     "/",
-    async (req: Request, res: Response): Promise<Response> => {
-        try {
-            const twitterPromise = axios(`${configUrls.base}${configUrls.twitter}`);
-            const facebookPromise = axios(`${configUrls.base}${configUrls.facebook}`);
-            const instagramPromise = axios(`${configUrls.base}${configUrls.instagram}`);
-            const [twitterResponse, facebookResponse, instagramResponse] = await Promise.all([twitterPromise, facebookPromise, instagramPromise]);
-            return res.status(200).send({
-                twitter: twitterResponse.data.map((data: { tweet: any; }) => data.tweet),
-                facebook: facebookResponse.data.map((data: { status: any; }) => data.status),
-                instagram: instagramResponse.data.map((data: { picture: any; }) => data.picture)
-            });
-        } catch (e) {
-            return res.json({
-                error: {
-                    message: e.message,
-                    status: 500
-                }
-            });
-        }
-    }
+    indexController.getSocialInfo
 );
 
 try {
